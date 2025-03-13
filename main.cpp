@@ -7,7 +7,8 @@
  *   the following functionalities:
  *     1. Input a new walking job
  *     2. List all of your current jobs
- *     3. Exit the program
+ *     3. Remove compleated job profiles
+ *     4. Exit the program
  *
  * How exciting!
 ***************************************************************************/
@@ -16,14 +17,12 @@
 #include "inventory.h"
 #include <iostream>
 #include <limits>
+#include <vector>
 
 int main() {
-    const int MAX = 5;
     int selection = 0;
     bool running = true;
-
-    Inventory inventoryList[MAX];
-    int currentCount = 0;
+    std::vector<Inventory> inventoryList;
 
     while (running)
     {
@@ -31,7 +30,8 @@ int main() {
         std::cout << "\nYou Lazy Dog Menu" << "\n\n";
         std::cout << "1. Enter a new job\n"
                   << "2. List all current jobs\n"
-                  << "3. Exit\n\n" 
+                  << "3. Remove a profile\n" 
+                  << "4. Exit\n\n"
                   << "Selection: ";  
 
         if (!(std::cin >> selection))
@@ -45,28 +45,31 @@ int main() {
         switch (selection)
         {
             case 1:
-                if (currentCount >= 5) {
+                if (inventoryList.size() >= 10) {
                     std::cout << "\nInventory is full!\n";
                     float total = 0;
-                    for (int i = 0; i < currentCount; i++) {
+                    for (int i = 0; i < inventoryList.size(); i++) {
                         total += inventoryList[i].getPriceQuoted();
                     }
 
                     std::cout << "---------------------------\n"
                               << "You currently have " 
-                              << currentCount 
+                              << inventoryList.size() 
                               << " job(s)\n@ a total of $" 
                               << total 
                               << "\n---------------------------" 
                               << std::endl;
                     break;
                 }
-                createNewJob(inventoryList, currentCount);
+                createNewJob(inventoryList);
                 break;
             case 2:
-                listJobs(inventoryList, currentCount);
+                listJobs(inventoryList);
                 break;
             case 3:
+                removeDog(inventoryList);
+                break;
+            case 4:
                 exitMenu();
                 running = false;
                 break;

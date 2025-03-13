@@ -6,8 +6,9 @@
 #include <iostream>
 #include <string>
 
-void createNewJob(Inventory inventoryList[], int &currentCount);
-void listJobs(Inventory inventoryList[], int currentCount);
+void createNewJob(std::vector<Inventory>& inventoryList);
+void listJobs(const std::vector<Inventory>& inventoryList);
+void removeDog(std::vector<Inventory>& inventoryList);
 void exitMenu();
 
 #endif
